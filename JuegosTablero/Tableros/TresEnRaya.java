@@ -1,7 +1,7 @@
 package JuegosTablero.Tableros;
 
 import JuegosTablero.Exceptions.MovimientoProhibidoException;
-import JuegosTablero.JugadorTresEnRaya;
+import JuegosTablero.Jugadores.JugadorTresEnRaya;
 
 public class TresEnRaya extends Tablero <Character>{
 
@@ -18,7 +18,7 @@ public class TresEnRaya extends Tablero <Character>{
 
     @Override
     public void setPosicion(int x, int y, Character valor) throws MovimientoProhibidoException{
-        if(getPosicion(x,y) == '-' || getPosicion(x,y) == null)
+        if(getPosicion(x,y) == '-')
             setValor(x,y,valor);
         else throw new MovimientoProhibidoException();
     }
@@ -39,11 +39,11 @@ public class TresEnRaya extends Tablero <Character>{
                 if(getPosicion(i,j) == '-')
                     cont ++;
 
-        return getTamanio()-cont;
+        return getTamanioT() - cont;
     }
 
-    @Override
     public boolean gana(JugadorTresEnRaya jugador){
+
         return ganaVertical(jugador.getFicha()) || ganaHorizontal(jugador.getFicha()) ||
                 ganaDiagonalPrincipal(jugador.getFicha()) || ganaDiagonalInversa(jugador.getFicha());
     }
@@ -56,7 +56,7 @@ public class TresEnRaya extends Tablero <Character>{
             for (int j = 0; j < getTamanio(); j++)
                 if(getPosicion(j,i) == ficha)
                     cont ++;
-            if(cont == 3)
+            if(cont == getTamanio())
                 vertical = true;
             i++;
         }
@@ -70,7 +70,7 @@ public class TresEnRaya extends Tablero <Character>{
             for (int j = 0; j < getTamanio(); j++)
                 if(getPosicion(i,j) == ficha)
                     cont ++;
-            if(cont == 3)
+            if(cont == getTamanio())
                 vertical = true;
             i++;
         }
@@ -82,7 +82,7 @@ public class TresEnRaya extends Tablero <Character>{
         while(i < getTamanio() && !vertical){
             if(getPosicion(i,i) == ficha)
                 cont ++;
-            if(cont == 3)
+            if(cont == getTamanio())
                 vertical = true;
             i++;
         }
@@ -95,20 +95,11 @@ public class TresEnRaya extends Tablero <Character>{
         while(i < getTamanio() && !vertical){
                 if(getPosicion(i, (getTamanio() - 1)- i) == ficha)
                     cont ++;
-            if(cont == 3)
+            if(cont == getTamanio())
                 vertical = true;
             i++;
         }
         return vertical;
-    }
-
-    public boolean completado(){
-        int cont = 0;
-        for(int i = 0; i < getTamanio(); i++)
-            for(int j = 0; j < getTamanio(); j++)
-                if(getPosicion(i,j) == '-')
-                    cont ++;
-        return cont == 0;
     }
     public void mostrar(){
         System.out.println(super.toString());

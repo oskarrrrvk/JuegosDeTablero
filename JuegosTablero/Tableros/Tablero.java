@@ -2,7 +2,6 @@ package JuegosTablero.Tableros;
 
 
 import JuegosTablero.Exceptions.MovimientoProhibidoException;
-import JuegosTablero.JugadorTresEnRaya;
 
 public abstract class Tablero <E> implements ITablero <E>{
 
@@ -35,6 +34,10 @@ public abstract class Tablero <E> implements ITablero <E>{
         return tablero.length;
     }
 
+    public int getTamanioT(){
+        return tablero.length * tablero[0].length;
+    }
+
     @Override
     public E getPosicion(int x, int y) {
         return tablero[x][y];
@@ -53,8 +56,6 @@ public abstract class Tablero <E> implements ITablero <E>{
     @Override
     public abstract int ocupacion();
 
-    @Override
-    public abstract boolean gana(JugadorTresEnRaya jugador);
 
     @Override
     public String toString() {

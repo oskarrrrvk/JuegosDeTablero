@@ -1,12 +1,16 @@
 package JuegosTablero;
 
 import JuegosTablero.Exceptions.MovimientoProhibidoException;
-import JuegosTablero.Tableros.TresEnRaya;
+import JuegosTablero.Jugadores.JugadorTresEnRaya;
+import JuegosTablero.Tableros.*;
 
 import java.util.Scanner;
 
 public class Sistema {
-    public Sistema(TresEnRaya tablero){
+    public Sistema(){
+
+    }
+    public void jugarTresEnraya(TresEnRaya tablero){
 
         JugadorTresEnRaya jugador1 = new JugadorTresEnRaya('X');
         JugadorTresEnRaya jugador2 = new JugadorTresEnRaya('O');
@@ -14,12 +18,11 @@ public class Sistema {
 
         tablero.borra();
         tablero.mostrar();
-
-        while(!tablero.gana(jugador1) && !tablero.gana(jugador2) && !tablero.completado()){
+        while(!tablero.gana(jugador1) && !tablero.gana(jugador2) && tablero.ocupacion() < tablero.getTamanioT()){
             int x;
             int y;
             boolean fallo;
-            if(!tablero.gana(jugador2)) {
+            if(!tablero.gana(jugador2) && tablero.ocupacion() < tablero.getTamanioT()) {
                 fallo = false;
                 do {
                     System.out.print("x1: ");
@@ -37,7 +40,7 @@ public class Sistema {
                 }while(fallo);
                 tablero.mostrar();
             }
-            if(!tablero.gana(jugador1)) {
+            if(!tablero.gana(jugador1) && tablero.ocupacion() < tablero.getTamanioT()) {
                 do {
                     fallo = false;
                     System.out.print("x2: ");
@@ -57,16 +60,59 @@ public class Sistema {
             }
         }
     }
-    public static void main(String[] args) {
 
-        TresEnRaya tablero3enRaya = new TresEnRaya();
+
+   public void jugarSudoku(Sudoku tablero){
+
+        int x;
+        int y;
+        int valor;
+        Scanner scn = new Scanner(System.in);
+
+        tablero.borra();
+        tablero.mostrar();
+
+        while(!tablero.gana()){
+
+            System.out.println("X: ");
+            x = scn.nextInt();
+
+            System.out.println("Y: ");
+            y = scn.nextInt();
+
+            System.out.println("Valor: ");
+            valor = scn.nextInt();
+
+            try {
+                tablero.setPosicion(x,y,valor);
+            } catch (MovimientoProhibidoException e) {
+                System.out.println(e.getMessage());
+            }
+            tablero.mostrar();
+        }
+
+    }
+
+    public static void main(String[] args) {
         char opcion;
+        int index;
+        Scanner scn = new Scanner(System.in);
+        Sistema sist = new Sistema();
 
         do{
-            Sistema sistema = new Sistema(tablero3enRaya);
+            System.out.println("\t1.TresEnRaya\n\t2.Sudoku\n\t0.Salir");
+            System.out.print("eleccion? ");
+            index = scn.nextInt();
+            switch (index) {
+                case 1: sist.jugarTresEnraya(new TresEnRaya());
+                    break;
+                case 2: sist.jugarSudoku(new Sudoku());
+                    break;
+                case 0:
+                break;
+            }
             System.out.print("Quieres continuar S/n?");
-            Scanner scanner = new Scanner(System.in);
-            opcion = scanner.next().charAt(0);
+            opcion = scn.next().charAt(0);
         } while(opcion != 'N' && opcion != 'n');
 
     }

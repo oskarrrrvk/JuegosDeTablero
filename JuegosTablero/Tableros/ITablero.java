@@ -1,7 +1,7 @@
 package JuegosTablero.Tableros;
 
 import JuegosTablero.Exceptions.MovimientoProhibidoException;
-import JuegosTablero.JugadorTresEnRaya;
+import JuegosTablero.Jugadores.JugadorTresEnRaya;
 
 /**
  * Tablero cuadrado de elementos de tipo int. Válido para albergar el estado de juegos tipo 'Barquitos' o ajedrez
@@ -70,6 +70,6 @@ public interface ITablero <E>{
    * Indica si se ha ganado la partida
    * @return un booleano en el caso de que se halla ganado la partida
    */
-  boolean gana(JugadorTresEnRaya jugador);
+
 
 }
