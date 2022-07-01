@@ -1,8 +1,9 @@
 package JuegosTablero;
 
 import JuegosTablero.Exceptions.MovimientoProhibidoException;
-import JuegosTablero.Jugadores.JugadorTresEnRaya;
-import JuegosTablero.Tableros.*;
+import JuegosTablero.Sudoku.Sudoku;
+import JuegosTablero.TresEnRaya.JugadorTresEnRaya;
+import JuegosTablero.TresEnRaya.TresEnRaya;
 
 import java.util.Scanner;
 
@@ -74,13 +75,13 @@ public class Sistema {
 
         while(!tablero.gana()){
 
-            System.out.println("X: ");
+            System.out.print("X: ");
             x = scn.nextInt();
 
-            System.out.println("Y: ");
+            System.out.print("Y: ");
             y = scn.nextInt();
 
-            System.out.println("Valor: ");
+            System.out.print("Valor: ");
             valor = scn.nextInt();
 
             try {
@@ -109,11 +110,9 @@ public class Sistema {
                 case 2: sist.jugarSudoku(new Sudoku());
                     break;
                 case 0:
-                break;
+                    break;
             }
-            System.out.print("Quieres continuar S/n?");
-            opcion = scn.next().charAt(0);
-        } while(opcion != 'N' && opcion != 'n');
+        } while(index != 0);
 
     }
 }
